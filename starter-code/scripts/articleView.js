@@ -36,14 +36,19 @@ articleView.handleAuthorFilter = function() {
     // REVIEW: Inside this function, "this" is the element that triggered the event handler function we're
     //         defining. "$(this)" is using jQuery to select that element, so we can chain jQuery methods
     //         onto it.
+    $('article').hide();
     if ($(this).val()) {
       // TODO: If the select box was changed to an option that has a value, we need to hide all the articles,
       //       and then show just the ones that match for the author that was selected.
       //       Use an "attribute selector" to find those articles, and fade them in for the reader.
 
+      var authorName = $(this).val();
+      $('article[data-author="' + authorName + '"]').fadeIn(750);
+
     } else {
       // TODO: If the select box was changed to an option that is blank, we should
       //       show all the articles, except the one article we are using as a template.
+      $('article:not(.template)').fadeIn(750);
 
     }
     $('#category-filter').val('');
@@ -64,6 +69,11 @@ articleView.handleMainNav = function() {
   //       single .tab-content section that is associated with the clicked .tab element.
   //       So: You need to dynamically build a selector string with the correct ID, based on the
   //       data available to you on the .tab element that was clicked.
+  $('.tab').on('click', function(){
+    $('.tab-content').hide();
+    var tabName = $(this).data('content');
+    $('#' + tabName).fadeIn(750);
+  });
 
 
   $('.main-nav .tab:first').click(); // Let's now trigger a click on the first .tab element, to set up the page.
@@ -84,5 +94,7 @@ articleView.setTeasers = function() {
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
 $(document).ready(function() {
-
+  articleView.populateFilters();
+  articleView.handleAuthorFilter();
+  articleView.handleMainNav();
 })
