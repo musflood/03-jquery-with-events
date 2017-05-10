@@ -18,6 +18,10 @@ img {
 
 /*TEXT STYLES
 =======================================*/
+h1, h2 {
+  font-family: 'Righteous', cursive;
+}
+
 p {
   font-size: 1em;
 }
