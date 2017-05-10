@@ -92,11 +92,18 @@ articleView.handleMainNav = function() {
 
 articleView.setTeasers = function() {
   $('.article-body *:nth-of-type(n+2)').hide(); // Hide elements beyond the first 2 in any article body.
+  $('.show-less').hide();
 
   $('#articles').on('click', '.read-on', function(e) {
     e.preventDefault();
     $(this).parent().find(':hidden').fadeIn(750);
     $(this).hide();
+  });
+
+  $('#articles').on('click', '.show-less', function(e) {
+    e.preventDefault();
+    $(this).hide().parent().find('.article-body *:nth-of-type(n+2)').hide();
+    $(this).siblings('.read-on').fadeIn(750);
   });
 
   // TODO: Add an event handler to reveal all the hidden elements,
