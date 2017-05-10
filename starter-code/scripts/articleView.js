@@ -56,6 +56,17 @@ articleView.handleAuthorFilter = function() {
 };
 
 articleView.handleCategoryFilter = function() {
+  $('#category-filter').on('change', function() {
+    $('article').hide();
+    if ($(this).val()) {
+      var category = $(this).val();
+      $('article[data-category="' + category + '"]').fadeIn(750);
+    } else {
+      $('article:not(.template)').fadeIn(750);
+    }
+    $('#author-filter').val('');
+  });
+
   // TODO: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
   //       When an option with a value is selected, hide all the articles, then reveal the matches.
   //       When the blank (default) option is selected, show all the articles, except for the template.
@@ -82,6 +93,12 @@ articleView.handleMainNav = function() {
 articleView.setTeasers = function() {
   $('.article-body *:nth-of-type(n+2)').hide(); // Hide elements beyond the first 2 in any article body.
 
+  $('#articles').on('click', '.read-on', function(e) {
+    e.preventDefault();
+    $(this).parent().find(':hidden').fadeIn(750);
+    $(this).hide();
+  });
+
   // TODO: Add an event handler to reveal all the hidden elements,
   //       when the .read-on link is clicked. You can go ahead and hide the
   //       "Read On" link once it has been clicked. Be sure to prevent the default link-click action!
@@ -95,6 +112,8 @@ articleView.setTeasers = function() {
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
 $(document).ready(function() {
   articleView.populateFilters();
+  articleView.setTeasers();
   articleView.handleAuthorFilter();
+  articleView.handleCategoryFilter();
   articleView.handleMainNav();
 })
